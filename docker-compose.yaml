@@ -1,0 +1,29 @@
+services:
+  api:
+    build: ./api
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+        restart: true
+    restart: always
+
+  parser:
+    build: ./parser
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+        restart: true
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5671:5671
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s

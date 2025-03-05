@@ -3,7 +3,7 @@ package server
 import (
 	"net/http"
 
-	"github.com/usernamenenad/ftn-acr/src/api/router/v1"
+	"github.com/usernamenenad/ftn-acr/router/v1"
 )
 
 type Server struct {

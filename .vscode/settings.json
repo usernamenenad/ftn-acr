@@ -1,6 +1,5 @@
 {
-    "editor.formatOnSave": true,
-    "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff"
-    }
+    "python.analysis.autoFormatStrings": true,
+    "editor.defaultFormatter": null,
+    "editor.formatOnSave": true
 }
