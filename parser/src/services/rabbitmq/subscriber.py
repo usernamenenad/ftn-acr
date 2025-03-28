@@ -2,6 +2,8 @@ import pika
 import pika.adapters.blocking_connection
 import pika.channel
 
+from src.services.handlers.invoker import HandlerInvoker
+
 
 class RabbitMqSubscriber:
     _self = None
@@ -22,5 +24,7 @@ class RabbitMqSubscriber:
         self._channel.basic_consume(
             queue=queue,
             auto_ack=True,
-            on_message_callback=lambda message: print(message),
+            on_message_callback=lambda message: HandlerInvoker().invoke_handler(
+                message
+            ),
         )

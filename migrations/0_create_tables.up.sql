@@ -22,13 +22,13 @@ CREATE TABLE IF NOT EXISTS "time_table" (
     subject_id UUID,
     classroom_id UUID,
     class VARCHAR(255),
-    holding_day DAY,
+    holding_day DATE, -- TODO: Figure out to make a Day type out of this
     time_to TIME,
     time_from TIME,
     program_id UUID,
     study_groups TEXT[],
     holding_date DATE,
     FOREIGN KEY (subject_id) REFERENCES subjects(id),
-    FOREIGN KEY (classroom_id) REFERENCES clasrooms(id),
+    FOREIGN KEY (classroom_id) REFERENCES classrooms(id),
     FOREIGN KEY (program_id) REFERENCES programs(id)
 );

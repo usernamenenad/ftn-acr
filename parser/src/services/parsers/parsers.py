@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, List
+from typing import Any, List, Set
 
 from src.services.parsers.types import Block, Day, Table, TitleType
 
@@ -43,7 +43,7 @@ class TimeFromParser(Parser):
 
 class TimeToParser(Parser):
     def parse(self, table: Table) -> List[str]:
-        times = []
+        times: List[str] = []
         time_from_index = self.__get_time_to_index(table)
 
         for row in table[2:]:
@@ -59,3 +59,23 @@ class TimeToParser(Parser):
                 return 2
             case TitleType.NoType:
                 return 3
+
+
+class ClassroomsParser(Parser):
+    def parse(self, table: Table) -> List[str]:
+        classrooms: List[str] = []
+        classrooms_index = self.__get_classroom_index(table)
+
+        for row in table[2:]:
+            classrooms.append(row[classrooms_index])
+
+        return classrooms
+
+    def __get_classroom_index(self, table: Table) -> int:
+        match TitleParser().parse(table):
+            case TitleType.Block:
+                return 4
+            case TitleType.Day:
+                return 3
+            case TitleType.NoType:
+                return 4
