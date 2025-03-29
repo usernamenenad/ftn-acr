@@ -1,4 +1,3 @@
-import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,10 +7,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './table.component.scss',
 })
 export class TableComponent implements OnInit {
-  tableData = [
-    { name: 'Nenad', surname: 'Radovic' },
-    { name: 'Borko', surname: 'Radovic' },
-  ];
-
   ngOnInit(): void {}
 }

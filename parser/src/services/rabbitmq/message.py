@@ -9,6 +9,7 @@ class MessageType(Enum):
 @dataclass
 class Message:
     message_type: MessageType
+    message_load: bytearray
 
 
 @dataclass

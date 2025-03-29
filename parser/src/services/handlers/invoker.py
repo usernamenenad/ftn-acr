@@ -1,6 +1,5 @@
-from src.services.rabbitmq.message import Message, MessageType
-
 from src.services.handlers.handlers import ClassroomHandler
+from src.services.rabbitmq.message import Message, MessageType
 
 
 class HandlerInvoker:

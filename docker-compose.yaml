@@ -1,20 +1,4 @@
 services:
-  api:
-    build: ./api
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-        restart: true
-    restart: always
-
-  parser:
-    build: ./parser
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-        restart: true
-    restart: always
-
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -27,3 +11,45 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+    restart: always
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "pg_isready -U postgres -d postgres"
+      ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  migrations:
+    build: ./migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+  api:
+    build: ./api
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+        restart: true
+      postgres:
+        condition: service_healthy
+        restart: true
+    restart: always
+
+  # parser:
+  #   build: ./parser
+  #   depends_on:
+  #     rabbitmq:
+  #       condition: service_healthy
+  #       restart: true
+  #   restart: always

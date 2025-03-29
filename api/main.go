@@ -1,15 +1,23 @@
 package main
 
-import services "github.com/usernamenenad/ftn-acr/services/rabbitmq"
+import (
+	"context"
+	"fmt"
+
+	"github.com/usernamenenad/ftn-acr/models/database"
+	"github.com/usernamenenad/ftn-acr/models/repository"
+)
 
 func main() {
-	// s := server.NewServer(":8000")
-	// if err := s.Run(); err != nil {
-	// 	log.Fatal(err)
-	// }
+	database.Open("postgres://postgres:password@postgres:5432/postgres?sslmode=disable")
+	defer database.Close()
 
-	sub := services.RabbitMqSubscriber{}
+	ch := make(chan bool)
 
-	sub.Subscribe("hello")
+	go func(ch chan bool) {
+		fmt.Println(repository.GetProgramByShortName(context.Background(), "RA"))
+		ch <- true
+	}(ch)
 
+	<-ch
 }
